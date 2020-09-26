@@ -10,13 +10,6 @@ cd src/ext-php-rdkafka/pure-php
 php producer.php
 ```
 
-## Low level consumer
-Will consume all messages available for partition 0:
-```bash
-cd src/ext-php-rdkafka/pure-php
-php lowLevelConsumer.php
-```
-
 ## High level consumer
 Will consume all messages available:
 ```bash

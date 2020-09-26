@@ -28,12 +28,6 @@ Will per default produce 10 messages:
 php producer.php
 ```
 
-## Low level consumer
-Will consume all messages available for partition 0:
-```bash
-php lowLevelConsumer.php
-```
-
 ## High level consumer
 Will consume all messages available:
 ```bash
