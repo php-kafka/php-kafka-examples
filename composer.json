@@ -1,0 +1,12 @@
+{
+  "require": {
+    "ext-json": "*",
+    "flix-tech/avro-serde-php": "^1.4",
+    "jobcloud/php-console-kafka-schema-registry": "^1.1",
+    "jobcloud/php-kafka-lib": "^1.0",
+    "ramsey/uuid": "^4.0"
+  },
+  "require-dev": {
+    "kwn/php-rdkafka-stubs": "^1.2.0"
+  }
+}

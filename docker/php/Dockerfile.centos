@@ -1,0 +1,39 @@
+ARG CENTOS_VERSION
+
+FROM centos:${CENTOS_VERSION}
+
+ARG LIBRDKAFKA_VERSION
+ARG PHP_RDKAFKA_VERSION
+ARG PHP_VERSION
+
+RUN yum install -y http://rpms.remirepo.net/enterprise/remi-release-7.rpm \
+    && yum install -y yum-utils \
+    && yum-config-manager --enable remi-php${PHP_VERSION} \
+    && yum install -y php php-cli php-devel php-pear zlib-devel
+
+RUN yum install -y git gcc gcc-c++ automake autoconf libtool make
+
+# Install librdkafka and ext-rdkafka
+RUN git clone --depth 1 --branch ${LIBRDKAFKA_VERSION} https://github.com/edenhill/librdkafka.git \
+    && cd librdkafka \
+    && ./configure \
+    && make \
+    && make install \
+    && git clone --depth 1 --branch ${PHP_RDKAFKA_VERSION} https://github.com/arnaud-lb/php-rdkafka.git \
+    && cd php-rdkafka \
+    && phpize \
+    && ./configure \
+    && make all -j 5 \
+    && make install \
+    && cd ../..;rm -rf librdkafka \
+    && echo "extension=rdkafka" >> /etc/php.d/rdkafka.ini \
+    && cp /usr/lib64/php/modules/rdkafka.so /usr/lib64/php/modules/rdkafka
+
+RUN echo $'#!/bin/sh \n\
+set -e \n\
+exec "$@" \n\
+' >> /usr/local/bin/php-entrypoint \
+    && chmod +x /usr/local/bin/php-entrypoint
+
+ENTRYPOINT ["php-entrypoint"]
+CMD ["php", "-a"]

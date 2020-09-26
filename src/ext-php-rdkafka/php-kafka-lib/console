@@ -1,0 +1,23 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+namespace Jobcloud\Message\Schema;
+
+include_once __DIR__ . '/../../../vendor/autoload.php';
+
+use Jobcloud\Kafka\SchemaRegistryClient\ServiceProvider\KafkaSchemaRegistryApiClientProvider;
+use Symfony\Component\Console\Application;
+use Jobcloud\SchemaConsole\ServiceProvider\CommandServiceProvider;
+use Pimple\Container;
+
+$container = new Container();
+
+$settings[KafkaSchemaRegistryApiClientProvider::SETTING_KEY_BASE_URL] = 'http://kafka-schema-registry:9083';
+$container->offsetSet(KafkaSchemaRegistryApiClientProvider::CONTAINER_KEY, $settings);
+
+$container->register(new CommandServiceProvider());
+
+$application = new Application();
+$application->addCommands($container[CommandServiceProvider::COMMANDS]);
+$application->run();

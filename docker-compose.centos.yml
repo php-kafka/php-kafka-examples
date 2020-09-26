@@ -1,0 +1,50 @@
+version: '3.7'
+services:
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile.centos
+      args:
+        CENTOS_VERSION: 7
+        PHP_VERSION: 74
+        LIBRDKAFKA_VERSION: v1.5.0
+        PHP_RDKAFKA_VERSION: 4.0.3
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./:/app
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2182
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:5.5.0
+    depends_on:
+      - zookeeper
+    ports:
+      - 9096:9096
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2182'
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:9096'
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  kafka-schema-registry:
+    image: confluentinc/cp-schema-registry:5.5.0
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - "9083:9083"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: kafka-schema-registry
+      SCHEMA_REGISTRY_LISTENERS: "http://0.0.0.0:9083"
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2182'
+      SCHEMA_REGISTRY_AVRO_COMPATIBILITY_LEVEL: 'full_transitive'
