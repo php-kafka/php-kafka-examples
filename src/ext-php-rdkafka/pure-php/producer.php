@@ -49,6 +49,10 @@ $conf->setDrMsgCb(function (Producer $kafka, Message $message) {
 //$conf->set('ssl.certificate.location', __DIR__.'/../keys/kafka.cert');
 //$conf->set('ssl.key.location', __DIR__.'/../keys/kafka.key');
 
+// Add additional output if you need to debug a problem
+// $conf->set('log_level', (string) LOG_DEBUG);
+// $conf->set('debug', 'all');
+
 $producer = new Producer($conf);
 // initialize producer topic
 $topic = $producer->newTopic('pure-php-test-topic');

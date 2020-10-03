@@ -29,6 +29,10 @@ $conf->set('enable.partition.eof', 'true');
 //$conf->set('ssl.certificate.location', __DIR__.'/../../../keys/kafka.cert');
 //$conf->set('ssl.key.location', __DIR__.'/../../../keys/kafka.key');
 
+// Add additional output if you need to debug a problem
+// $conf->set('log_level', (string) LOG_DEBUG);
+// $conf->set('debug', 'all');
+
 // Create high level consumer
 $consumer = new KafkaConsumer($conf);
 

@@ -63,6 +63,10 @@ $producer = $builder->withAdditionalConfig(
         'client.id' => 'php-kafka-lib-producer-avro',
         // set compression (supported are: none,gzip,lz4,snappy,zstd)
         'compression.codec' => 'snappy',
+
+        // Add additional output if you need to debug a problem
+        // 'log_level' => (string) LOG_DEBUG,
+        // 'debug' => 'all'
     ]
 )
     ->withAdditionalBroker('kafka:9096')

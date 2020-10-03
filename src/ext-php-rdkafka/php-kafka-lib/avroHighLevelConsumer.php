@@ -79,6 +79,10 @@ $consumer = $builder->withAdditionalConfig(
             //'ssl.endpoint.identification.algorithm' => 'https',
             //'sasl.username' => '',
             //'sasl.password' => '',
+
+            // Add additional output if you need to debug a problem
+            // 'log_level' => (string) LOG_DEBUG,
+            // 'debug' => 'all'
         ]
     )
     ->withAdditionalBroker('kafka:9096')
