@@ -39,7 +39,7 @@ RUN set -xe \
     && mkdir -p $PHP_INI_DIR/conf.d \
     && git clone https://github.com/php/php-src.git /usr/src/php \
     && cd /usr/src/php \
-    && git checkout 67f8e938fd03398b19f6e6fa012f65e74c8ec82a \
+    && git checkout ae944503c34d7c89433eaefe607fc0d631d6f9ac \
     && ./buildconf --force \
     && ./configure \
         --with-config-file-path="$PHP_INI_DIR" \
