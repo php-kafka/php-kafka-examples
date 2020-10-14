@@ -38,10 +38,11 @@ $consumer = new KafkaConsumer($conf);
 
 // Subscribe to one or multiple topics
 $consumer->subscribe(['pure-php-test-topic']);
-
+$c = 0;
 while (true) {
     // Try to consume messages for the given timout (20s)
     $message = $consumer->consume(20000);
+    $c++;
 
     if (RD_KAFKA_RESP_ERR__PARTITION_EOF === $message->err) {
         echo 'Reached end of partition, waiting for more messages...' . PHP_EOL;
@@ -54,19 +55,23 @@ while (true) {
         continue;
     }
 
-    echo sprintf(
+    if($c%1000 === 0) {
+        echo sprintf('%d messages consumed', $c) . PHP_EOL;
+    }
+
+    /*echo sprintf(
         'Read message with key:%s payload:%s topic:%s partition:%d offset:%d',
         $message->key,
         $message->payload,
         $message->topic_name,
         $message->partition,
         $message->offset
-    ) . PHP_EOL;
+    ) . PHP_EOL;*/
     // Here is where you do your business logic to process your message
     // after you have done so, commit the message offset to the broker
 
     // commit the message(s) offset synchronous back to the broker
-    $consumer->commit($message);
+    //$consumer->commit($message);
 
     // you can also commit the message(s) offset in an async manner, which is slightly faster
     // but poses of course the challenge of handling errors in an async manner as well

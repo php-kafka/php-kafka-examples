@@ -16,6 +16,7 @@ $conf->set('metadata.broker.list', 'kafka:9096');
 $conf->set('compression.codec', 'snappy');
 // set timeout, producer will retry for 5s
 $conf->set('message.timeout.ms', '5000');
+$conf->set('linger.ms', '1000');
 //If you need to produce exactly once and want to keep the original produce order, uncomment the line below
 //$conf->set('enable.idempotence', 'true');
 
@@ -28,7 +29,7 @@ $conf->setDrMsgCb(function (Producer $kafka, Message $message) {
         echo sprintf('Message FAILED (%s, %s) to send with payload => %s', $message->err, $errorStr, $message->payload) . PHP_EOL;
     } else {
         // message successfully delivered
-        echo sprintf('Message sent SUCCESSFULLY with payload => %s', $message->payload) . PHP_EOL;
+        //echo sprintf('Message sent SUCCESSFULLY with payload => %s', 'x') . PHP_EOL;
     }
 });
 
@@ -57,7 +58,7 @@ $producer = new Producer($conf);
 // initialize producer topic
 $topic = $producer->newTopic('pure-php-test-topic');
 // Produce 10 test messages
-$amountTestMessages = 10;
+$amountTestMessages = 1000000;
 
 // Loop to produce some test messages
 for ($i = 0; $i < $amountTestMessages; ++$i) {
@@ -69,13 +70,19 @@ for ($i = 0; $i < $amountTestMessages; ++$i) {
     $topic->producev(
         $partition,
         RD_KAFKA_MSG_F_BLOCK, // will block produce if queue is full
-        sprintf('test message-%d',$i),
+        //sprintf('test message-%d',$i),
+        str_repeat('12312313123213123',10000),
         sprintf('test-key-%d', $i),
         [
             'some' => sprintf('header value %d', $i)
         ]
     );
-    echo sprintf('Queued message number: %d', $i) . PHP_EOL;
+    if ($i%1000 === 0) {
+        echo sprintf('Queued message number: %d', $i) . PHP_EOL;
+    }
+    if ($i%5000 === 0) {
+        $producer->flush(10000);
+    }
 
     // Poll for events e.g. producer callbacks, to handle errors, etc.
     // 0 = non-blocking
