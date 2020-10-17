@@ -38,15 +38,14 @@ $consumer = $builder->withAdditionalConfig(
 )
     ->withAdditionalBroker('kafka:9096')
     ->withConsumerGroup('php-kafka-lib-high-level-consumer')
-    ->withSubscription('pure-php-test-topic')
+    ->withSubscription('php-kafka-lib-test-topic')
     ->build();
 
 $consumer->subscribe();
-$c = 0;
+
 while (true) {
     try {
         $message = $consumer->consume(10000);
-        ++$c;
     } catch (KafkaConsumerTimeoutException|KafkaConsumerEndOfPartitionException $e) {
         echo 'Didn\'t receive any messages, waiting for more...' . PHP_EOL;
         continue;
@@ -55,10 +54,7 @@ while (true) {
         continue;
     }
 
-    if($c%1000 === 0) {
-        echo sprintf('%d messages consumed', $c) . PHP_EOL;
-    }
-    /*echo sprintf(
+    echo sprintf(
             'Read message with key:%s payload:%s topic:%s partition:%d offset:%d headers:%s',
             $message->getKey(),
             $message->getBody(),
@@ -66,7 +62,7 @@ while (true) {
             $message->getPartition(),
             $message->getOffset(),
             implode(',', $message->getHeaders())
-        ) . PHP_EOL;*/
+        ) . PHP_EOL;
 
-    //$consumer->commit($message);
+    $consumer->commit($message);
 }
