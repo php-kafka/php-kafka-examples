@@ -28,6 +28,5 @@ RUN git clone --depth 1 --branch ${LIBRDKAFKA_VERSION} https://github.com/edenhi
 RUN docker-php-ext-install pcntl && \
     docker-php-ext-enable rdkafka pcntl > /dev/null 2>&1
 
-# Install composer and prestissimo
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer \
-    && composer global require hirak/prestissimo
+# Install composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
