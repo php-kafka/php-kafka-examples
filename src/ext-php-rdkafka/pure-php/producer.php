@@ -22,7 +22,7 @@ $conf->set('message.timeout.ms', '5000');
 // This callback processes the delivery reports from the broker
 // you can see if your message was truly sent, this can be especially of importance if you poll async
 $conf->setDrMsgCb(function (Producer $kafka, Message $message) {
-    if ($message->err) {
+    if (RD_KAFKA_RESP_ERR_NO_ERROR !== $message->err) {
         $errorStr = rd_kafka_err2str($message->err);
 
         echo sprintf('Message FAILED (%s, %s) to send with payload => %s', $message->err, $errorStr, $message->payload) . PHP_EOL;
