@@ -34,6 +34,7 @@ $conf->set('metadata.broker.list', 'kafka:9096');
 // $conf->set('debug', 'all');
 
 $producer = new Producer($conf);
+
 // get metadata
 $metadata = $producer->getMetadata(false, 10000);
 echo sprintf('Broker id: %d', $metadata->getOrigBrokerId()) . PHP_EOL;
@@ -51,12 +52,12 @@ while ($brokers->valid()) {
 echo 'Info about topics' . PHP_EOL;
 $topics = $metadata->getTopics();
 while ($topics->valid()) {
-    echo sprintf('Topic name: %s', $topics->current()->getTopic()) . PHP_EOL;
-    echo sprintf('Topic error: %d', $topics->current()->getErr()) . PHP_EOL;
+    echo sprintf('Topic name: %s', $topics->current()->getName()) . PHP_EOL;
+    echo sprintf('Topic error: %d', $topics->current()->getErrorCode()) . PHP_EOL;
     $partitions = $topics->current()->getPartitions();
     while ($partitions->valid()) {
         echo sprintf('  Topic partition id: %d', $partitions->current()->getId()) . PHP_EOL;
-        echo sprintf('  Topic partition err: %d', $partitions->current()->getErr()) . PHP_EOL;
+        echo sprintf('  Topic partition err: %d', $partitions->current()->getErrorCode()) . PHP_EOL;
         echo sprintf('  Topic partition leader id: %d', $partitions->current()->getLeader()) . PHP_EOL;
         $replicas = $partitions->current()->getReplicas();
         while ($replicas->valid()) {
