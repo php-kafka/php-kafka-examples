@@ -176,14 +176,6 @@ RUN set -eux; \
 	make -j "$(nproc)"; \
 	find -type f -name '*.a' -delete; \
 	make install; \
-	find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; \
-	make clean; \
-	\
-# https://github.com/docker-library/php/issues/692 (copy default example "php.ini" files somewhere easily discoverable)
-	cp -v php.ini-* "$PHP_INI_DIR/"; \
-	\
-	cd /; \
-	docker-php-source delete; \
 	\
 # reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	apt-mark auto '.*' > /dev/null; \
