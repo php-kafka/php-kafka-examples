@@ -9,7 +9,7 @@ $conf->set('client.id', 'pure-php-high-level-consumer');
 // set consumer group, e.g. <my-application-name>-consumer
 $conf->set('group.id', 'pure-php-high-level-consumer');
 // set broker
-$conf->set('metadata.broker.list', 'jobcloud-messaage-bus:909');
+$conf->set('metadata.broker.list', 'kafka:9096');
 // don't auto commit, give the application the control to do that (default is: true)
 $conf->set('enable.auto.commit', 'false');
 // start at the very beginning of the topic when reading for the first time

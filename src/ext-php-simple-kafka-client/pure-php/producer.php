@@ -14,8 +14,7 @@ $conf->set('metadata.broker.list', 'kafka:9096');
 // set compression (supported are: none,gzip,lz4,snappy,zstd)
 $conf->set('compression.codec', 'snappy');
 // set timeout, producer will retry for 5s
-$conf->set('message.timeout.ms', '1000');
-$conf->set('message.send.max.retries', '1');
+$conf->set('message.timeout.ms', '5000');
 //If you need to produce exactly once and want to keep the original produce order, uncomment the line below
 //$conf->set('enable.idempotence', 'true');
 
@@ -27,14 +26,6 @@ $conf->setDrMsgCb(function (Producer $kafka, Message $message) {
 
         echo sprintf('Message FAILED (%s, %s) to send with payload => %s', $message->err, $errorStr, $message->payload) . PHP_EOL;
     } else {
-        /*var_dump($opaque);
-        // message successfully delivered
-        if (false === is_array($opaque)) {
-            $opaque = [];
-            $opaque[] = 'opaque was already freed';
-        }
-
-        echo sprintf('Message key %s and opaque %s', $message->key, $opaque[0]) . PHP_EOL;*/
         echo sprintf('Message sent SUCCESSFULLY with payload => %s', $message->payload) . PHP_EOL;
     }
 });
@@ -80,8 +71,7 @@ for ($i = 0; $i < $amountTestMessages; ++$i) {
         sprintf('test-key-%d', $i),
         [
             'some' => sprintf('header value %d', $i)
-        ],
-        null
+        ]
     );
     echo sprintf('Queued message number: %d', $i) . PHP_EOL;
 
@@ -94,7 +84,7 @@ for ($i = 0; $i < $amountTestMessages; ++$i) {
 
 // Shutdown producer, flush messages that are in queue. Give up after 20s
 $result = $producer->flush(20000);
-sleep(4);
+
 if (RD_KAFKA_RESP_ERR_NO_ERROR !== $result) {
     echo 'Was not able to shutdown within 20s. Messages might be lost!' . PHP_EOL;
 }
