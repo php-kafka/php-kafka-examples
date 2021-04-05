@@ -17,24 +17,6 @@ $conf->set('auto.offset.reset', 'earliest');
 // Get eof code instead of null
 $conf->set('enable.partition.eof', 'true');
 
-$conf->setRebalanceCb(
-    function (Consumer $kafka, $err, array $partitions = null) {
-        switch ($err) {
-            case RD_KAFKA_RESP_ERR__ASSIGN_PARTITIONS:
-                $kafka->assign($partitions);
-                break;
-
-            case RD_KAFKA_RESP_ERR__REVOKE_PARTITIONS:
-                $kafka->assign(NULL);
-                break;
-
-            default:
-                $kafka->assign(NULL); // sync state
-                break;
-        }
-    }
-);
-
 // SASL Authentication
 //$conf->set('sasl.mechanisms', '');
 //$conf->set('ssl.endpoint.identification.algorithm', 'https');
