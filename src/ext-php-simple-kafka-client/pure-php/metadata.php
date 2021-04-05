@@ -1,7 +1,7 @@
 <?php
 
-use Kafka\Configuration;
-use Kafka\Producer;
+use SimpleKafkaClient\Configuration;
+use SimpleKafkaClient\Producer;
 
 error_reporting(E_ALL);
 

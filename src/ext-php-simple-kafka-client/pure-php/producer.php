@@ -1,43 +1,10 @@
 <?php
 
-// DISCLAIMER: this feature is not released yet and is subject to change
-
-use Kafka\Configuration;
-use Kafka\Message;
-use Kafka\Producer;
-use Kafka\KafkaErrorException;
+use SimpleKafkaClient\Configuration;
+use SimpleKafkaClient\Message;
+use SimpleKafkaClient\Producer;
 
 error_reporting(E_ALL);
-
-// -------- Intro --------
-// The transactional producer operates on top of the idempotent producer,
-// and provides full exactly-once semantics (EOS) for Apache Kafka when used
-// with the transaction aware consumer (isolation.level=read_committed, which is the default).
-
-// function to handle output of transaction error
-function echoTransactionError(KafkaErrorException $e) {
-    $retryString = 'is not retriable';
-    $fatalString = 'is not fatal';
-    $abortString = 'doesn\'t need transaction abort';
-
-    if ($e->isFatal()) {
-        $fatalString = 'is fatal';
-    }
-
-    if ($e->isRetriable()) {
-        $retryString = 'is retriable';
-    }
-
-    if ($e->transactionRequiresAbort()) {
-        $abortString = 'needs transaction abort';
-    }
-
-    echo 'Was unable to initialize the transactional producer' . PHP_EOL;
-
-    echo sprintf('The reason was: %s, this error %d, %s, %s, %s', $e->getMessage(), $e->getCode(), $fatalString, $retryString, $abortString) . PHP_EOL;
-    echo sprintf('In detail this means %s', $e->getErrorString()) . PHP_EOL;
-    echo sprintf('Trace is %s', $e->getTraceAsString()) . PHP_EOL;
-}
 
 $conf = new Configuration();
 // will be visible in broker logs
@@ -47,27 +14,34 @@ $conf->set('metadata.broker.list', 'kafka:9096');
 // set compression (supported are: none,gzip,lz4,snappy,zstd)
 $conf->set('compression.codec', 'snappy');
 // set timeout, producer will retry for 5s
-$conf->set('message.timeout.ms', '5000');
-
-// For the transactional producer you need a unique id to identify it
-$conf->set('transactional.id', 'some-unique-id-of-your-producer-to-recognize-it');
+$conf->set('message.timeout.ms', '1000');
+$conf->set('message.send.max.retries', '1');
+//If you need to produce exactly once and want to keep the original produce order, uncomment the line below
+//$conf->set('enable.idempotence', 'true');
 
 // This callback processes the delivery reports from the broker
-// you can see if your message was truly sent
+// you can see if your message was truly sent, this can be especially of importance if you poll async
 $conf->setDrMsgCb(function (Producer $kafka, Message $message) {
     if (RD_KAFKA_RESP_ERR_NO_ERROR !== $message->err) {
         $errorStr = rd_kafka_err2str($message->err);
 
         echo sprintf('Message FAILED (%s, %s) to send with payload => %s', $message->err, $errorStr, $message->payload) . PHP_EOL;
     } else {
+        /*var_dump($opaque);
         // message successfully delivered
+        if (false === is_array($opaque)) {
+            $opaque = [];
+            $opaque[] = 'opaque was already freed';
+        }
+
+        echo sprintf('Message key %s and opaque %s', $message->key, $opaque[0]) . PHP_EOL;*/
         echo sprintf('Message sent SUCCESSFULLY with payload => %s', $message->payload) . PHP_EOL;
     }
 });
 
 // SASL Authentication
 // can be SASL_PLAINTEXT, SASL_SSL
-//$conf->set('security.protocol', '');
+// conf->set('security.protocol', '');
 // can be GSSAPI, PLAIN, SCRAM-SHA-256, SCRAM-SHA-512, OAUTHBEARER
 // $conf->set('sasl.mechanisms', '');
 // $conf->set('sasl.username', '');
@@ -88,25 +62,9 @@ $conf->setDrMsgCb(function (Producer $kafka, Message $message) {
 
 $producer = new Producer($conf);
 // initialize producer topic
-$topic = $producer->getTopicHandle('pure-php-transactional-test-topic');
+$topic = $producer->getTopicHandle('pure-php-test-topic');
 // Produce 10 test messages
 $amountTestMessages = 10;
-
-// Initialize transactions
-try {
-    $producer->initTransactions(10000);
-} catch (KafkaErrorException $e) {
-    echoTransactionError($e);
-    die;
-}
-
-// Begin transaction for our 10 messages
-try {
-    $producer->beginTransaction();
-} catch (KafkaErrorException $e) {
-    echoTransactionError($e);
-    die;
-}
 
 // Loop to produce some test messages
 for ($i = 0; $i < $amountTestMessages; ++$i) {
@@ -122,7 +80,8 @@ for ($i = 0; $i < $amountTestMessages; ++$i) {
         sprintf('test-key-%d', $i),
         [
             'some' => sprintf('header value %d', $i)
-        ]
+        ],
+        null
     );
     echo sprintf('Queued message number: %d', $i) . PHP_EOL;
 
@@ -133,17 +92,9 @@ for ($i = 0; $i < $amountTestMessages; ++$i) {
     $producer->poll(0);
 }
 
-// Commit transaction for our 10 messages
-try {
-    $producer->commitTransaction(10000);
-} catch (KafkaErrorException $e) {
-    echoTransactionError($e);
-    die;
-}
-
 // Shutdown producer, flush messages that are in queue. Give up after 20s
 $result = $producer->flush(20000);
-
+sleep(4);
 if (RD_KAFKA_RESP_ERR_NO_ERROR !== $result) {
     echo 'Was not able to shutdown within 20s. Messages might be lost!' . PHP_EOL;
 }

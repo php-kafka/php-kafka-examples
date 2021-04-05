@@ -1,7 +1,7 @@
 <?php
 
-use Kafka\Configuration;
-use Kafka\Consumer;
+use SimpleKafkaClient\Configuration;
+use SimpleKafkaClient\Consumer;
 
 $conf = new Configuration();
 // will be visible in broker logs
@@ -9,16 +9,29 @@ $conf->set('client.id', 'pure-php-high-level-consumer');
 // set consumer group, e.g. <my-application-name>-consumer
 $conf->set('group.id', 'pure-php-high-level-consumer');
 // set broker
-$conf->set('metadata.broker.list', 'kafka:9096');
+$conf->set('metadata.broker.list', 'jobcloud-messaage-bus:909');
 // don't auto commit, give the application the control to do that (default is: true)
 $conf->set('enable.auto.commit', 'false');
 // start at the very beginning of the topic when reading for the first time
 $conf->set('auto.offset.reset', 'earliest');
 // Get eof code instead of null
 $conf->set('enable.partition.eof', 'true');
-$conf->setOffsetCommitCb(
-    function($kafka, $err, $partitions) {
-        echo var_dump($x);
+
+$conf->setRebalanceCb(
+    function (Consumer $kafka, $err, array $partitions = null) {
+        switch ($err) {
+            case RD_KAFKA_RESP_ERR__ASSIGN_PARTITIONS:
+                $kafka->assign($partitions);
+                break;
+
+            case RD_KAFKA_RESP_ERR__REVOKE_PARTITIONS:
+                $kafka->assign(NULL);
+                break;
+
+            default:
+                $kafka->assign(NULL); // sync state
+                break;
+        }
     }
 );
 
