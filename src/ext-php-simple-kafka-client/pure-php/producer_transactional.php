@@ -1,11 +1,9 @@
 <?php
 
-// DISCLAIMER: this feature is not released yet and is subject to change
-
-use Kafka\Configuration;
-use Kafka\Message;
-use Kafka\Producer;
-use Kafka\KafkaErrorException;
+use SimpleKafkaClient\Configuration;
+use SimpleKafkaClient\Message;
+use SimpleKafkaClient\Producer;
+use SimpleKafkaClient\KafkaErrorException;
 
 error_reporting(E_ALL);
 

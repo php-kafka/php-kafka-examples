@@ -1,8 +1,8 @@
 <?php
 
-use Kafka\Configuration;
-use Kafka\Message;
-use Kafka\Producer;
+use SimpleKafkaClient\Configuration;
+use SimpleKafkaClient\Message;
+use SimpleKafkaClient\Producer;
 
 error_reporting(E_ALL);
 
@@ -26,7 +26,6 @@ $conf->setDrMsgCb(function (Producer $kafka, Message $message) {
 
         echo sprintf('Message FAILED (%s, %s) to send with payload => %s', $message->err, $errorStr, $message->payload) . PHP_EOL;
     } else {
-        // message successfully delivered
         echo sprintf('Message sent SUCCESSFULLY with payload => %s', $message->payload) . PHP_EOL;
     }
 });

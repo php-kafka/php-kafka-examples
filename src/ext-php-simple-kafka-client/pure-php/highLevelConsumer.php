@@ -1,7 +1,7 @@
 <?php
 
-use Kafka\Configuration;
-use Kafka\Consumer;
+use SimpleKafkaClient\Configuration;
+use SimpleKafkaClient\Consumer;
 
 $conf = new Configuration();
 // will be visible in broker logs
@@ -16,11 +16,6 @@ $conf->set('enable.auto.commit', 'false');
 $conf->set('auto.offset.reset', 'earliest');
 // Get eof code instead of null
 $conf->set('enable.partition.eof', 'true');
-$conf->setOffsetCommitCb(
-    function($kafka, $err, $partitions) {
-        echo var_dump($x);
-    }
-);
 
 // SASL Authentication
 //$conf->set('sasl.mechanisms', '');
