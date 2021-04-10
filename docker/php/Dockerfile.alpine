@@ -3,7 +3,10 @@ ARG PHP_IMAGE_TAG
 FROM php:${PHP_IMAGE_TAG}
 
 ARG LIBRDKAFKA_VERSION
-ARG PHP_RDKAFKA_VERSION
+ARG PHP_EXTENSION
+ARG PHP_EXTENSION_VERSION
+
+
 
 # Install packages
 RUN apk --no-cache upgrade && \
@@ -16,8 +19,8 @@ RUN git clone --depth 1 --branch ${LIBRDKAFKA_VERSION} https://github.com/edenhi
     && ./configure \
     && make \
     && make install \
-    && git clone --depth 1 --branch ${PHP_RDKAFKA_VERSION} https://github.com/arnaud-lb/php-rdkafka.git \
-    && cd php-rdkafka \
+    && git clone --depth 1 --branch ${PHP_EXTENSION_VERSION} https://github.com/${PHP_EXTENSION}.git \
+    && cd $(basename ${PHP_EXTENSION}) \
     && phpize \
     && ./configure \
     && make all -j 5 \
@@ -26,7 +29,11 @@ RUN git clone --depth 1 --branch ${LIBRDKAFKA_VERSION} https://github.com/edenhi
 
 # Install php extensions
 RUN docker-php-ext-install pcntl && \
-    docker-php-ext-enable rdkafka pcntl > /dev/null 2>&1
+    if [ ${PHP_EXTENSION} = "arnaud-lb/php-rdkafka" ]; then \
+       docker-php-ext-enabe rdkafka pcntl > /dev/null 2>&1; \
+    else \
+      docker-php-ext-enable simple_kafka_client pcntl > /dev/null 2>&1; \
+    fi
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
