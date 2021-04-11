@@ -1,7 +1,7 @@
 # Register test schema
 Run the following to register the test schema:
 ```bash
-cd src/ext-php-rdkafka/php-kafka-lib
+cd src/ext-php-simple-kafka-client/php-simple-kafka-lib
 ./console kafka-schema-registry:register:changed avroSchema
 ```
 
@@ -25,13 +25,13 @@ Will consume all messages available:
 php avroConsumer.php
 ```
 
-## Producer
+## Simple producer
 Will per default produce 10 messages:
 ```bash
 php producer.php
 ```
 
-## High level consumer
+## Simple consumer
 Will consume all messages available:
 ```bash
 php consumer.php

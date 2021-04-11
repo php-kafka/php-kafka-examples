@@ -1,7 +1,11 @@
 # Running consumer / producer
 
 ## Prerequisites
-Be sure to do this first: [Start containers](./../../../README.md#start-containers-for-examples)
+Be sure to do this first: [Start containers](./../README.md)
+Connect to the php container:
+```bash
+docker-compose php exec -it bash
+```
 
 ## Producer
 Will per default produce 10 messages:
@@ -10,9 +14,9 @@ cd src/ext-php-rdkafka/pure-php
 php producer.php
 ```
 
-## High level consumer
+## Consumer
 Will consume all messages available:
 ```bash
 cd src/ext-php-rdkafka/pure-php
-php highLevelConsumer.php
+php consumer.php
 ```

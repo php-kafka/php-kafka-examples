@@ -1,0 +1,32 @@
+{
+  "type": "record",
+  "name": "product",
+  "namespace": "nickzh.php.kafka.examples.entity",
+  "fields": [
+    {
+      "name": "id",
+      "type": "string",
+      "doc": "UUID of our product"
+    },
+    {
+      "name": "name",
+      "type": "string",
+      "doc": "Name of our product"
+    },
+    {
+      "name": "description",
+      "type": [
+        "null",
+        "string"
+      ],
+      "default": null,
+      "doc": "Description of our product"
+    },
+    {
+      "name": "price",
+      "type": "float",
+      "default": null,
+      "doc": "Price of our product"
+    }
+  ]
+}

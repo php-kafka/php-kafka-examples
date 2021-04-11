@@ -50,7 +50,7 @@ while (true) {
         echo 'Timed out without receiving a new message, waiting for more messages...' . PHP_EOL;
         continue;
     } else if (RD_KAFKA_RESP_ERR_NO_ERROR !== $message->err) {
-        echo rd_kafka_err2str($message->err) . PHP_EOL;
+        echo kafka_err2str($message->err) . PHP_EOL;
         continue;
     }
 

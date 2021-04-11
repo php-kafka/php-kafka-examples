@@ -2,27 +2,22 @@
 This repository has PHP examples for Kafka consumers / producers for:
 - [php-rdkafka](https://github.com/arnaud-lb/php-rdkafka): Examples just using the PHP extension
 - [php-kafka-lib](https://github.com/jobcloud/php-kafka-lib): PHP library that relies on [php-rdkafka](https://github.com/arnaud-lb/php-rdkafka) and supports [avro](https://github.com/flix-tech/avro-serde-php)
+- [php-simple-kafka-client](https://github.com/php-kafka/php-simple-kafka-client): Examples just using the PHP extension
+- [php-simple-kafka-lib](https://github.com/php-kafka/php-simple-kafka-lib): PHP library that relies on [php-simple-kafka-client](https://github.com/php-kafka/php-simple-kafka-client) and supports [avro](https://github.com/flix-tech/avro-serde-php)
 
 ## Examples
-- [php-rdkafka](src/ext-php-rdkafka/pure-php)
-- [php-kafka-lib](src/ext-php-rdkafka/php-kafka-lib)
-
-## Start containers for examples
-Be sure to start the docker containers.  
-To do so, run this in the project root:
-```bash
-docker-compose up -d
-docker-compose exec php bash
-```
-Then follow the instructions in the example folders.
+Checkout these folders to see how to run the examples:
+- [php-rdkafka](src/ext-php-rdkafka)
+- [php-simple-kafka-client](src/ext-php-simple-kafka-client)
 
 ## Customize to fit your setup
 If you wan't to test / debug something that is closer to your setup,  
 you can modify the following arguments in `docker-compose.yml`:
 ```
-PHP_IMAGE_TAG: 7.4-cli-alpine3.11
-LIBRDKAFKA_VERSION: v1.4.0
-PHP_RDKAFKA_VERSION: 4.0.3
+PHP_IMAGE_TAG: 8.0-cli-alpine3.13
+LIBRDKAFKA_VERSION: v1.6.1
+PHP_EXTENSION: php-kafka/php-simple-kafka-client
+PHP_EXTENSION_VERSION: 0.1.1
 ```
 Adjust those, to reflect your setup and afterwards run:
 ```

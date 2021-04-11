@@ -2,15 +2,16 @@ version: '3.7'
 services:
   php:
     build:
-      context: ./docker/php
-      dockerfile: Dockerfile.master
+      context: ../php
+      dockerfile: ../php/Dockerfile.debug
       args:
-        LIBRDKAFKA_VERSION: v1.5.0
+        PHP_VERSION: 7.4.14
+        LIBRDKAFKA_VERSION: v1.5.3
+        PHP_RDKAFKA_VERSION: 5.0.0
     tty: true
     working_dir: /app
     volumes:
       - ./:/app
-      - ../php-rdkafka:/rdkafka
 
   zookeeper:
     image: confluentinc/cp-zookeeper:5.5.0
