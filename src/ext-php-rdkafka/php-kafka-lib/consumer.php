@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../../vendor/autoload.php');
+require_once('../vendor/autoload.php');
 
 use Jobcloud\Kafka\Consumer\KafkaConsumerBuilder;
 use Jobcloud\Kafka\Exception\KafkaConsumerConsumeException;

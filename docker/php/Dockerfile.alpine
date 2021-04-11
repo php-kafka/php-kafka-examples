@@ -30,7 +30,7 @@ RUN git clone --depth 1 --branch ${LIBRDKAFKA_VERSION} https://github.com/edenhi
 # Install php extensions
 RUN docker-php-ext-install pcntl && \
     if [ ${PHP_EXTENSION} = "arnaud-lb/php-rdkafka" ]; then \
-       docker-php-ext-enabe rdkafka pcntl > /dev/null 2>&1; \
+       docker-php-ext-enable rdkafka pcntl > /dev/null 2>&1; \
     else \
       docker-php-ext-enable simple_kafka_client pcntl > /dev/null 2>&1; \
     fi

@@ -17,7 +17,7 @@ you can modify the following arguments in `docker-compose.yml`:
 PHP_IMAGE_TAG: 8.0-cli-alpine3.13
 LIBRDKAFKA_VERSION: v1.6.1
 PHP_EXTENSION: php-kafka/php-simple-kafka-client
-PHP_EXTENSION_VERSION: 0.1.1
+PHP_EXTENSION_VERSION: v0.1.1
 ```
 Adjust those, to reflect your setup and afterwards run:
 ```

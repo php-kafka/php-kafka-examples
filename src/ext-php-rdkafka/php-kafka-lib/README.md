@@ -19,7 +19,7 @@ Will per default produce 10 avro messages:
 php avroProducer.php
 ```
 
-## Avro high level consumer
+## Avro consumer
 Will consume all messages available:
 ```bash
 php avroConsumer.php
@@ -31,7 +31,7 @@ Will per default produce 10 messages:
 php producer.php
 ```
 
-## High level consumer
+## Consumer
 Will consume all messages available:
 ```bash
 php consumer.php

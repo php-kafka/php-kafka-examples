@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../../vendor/autoload.php');
+require_once('../vendor/autoload.php');
 
 use FlixTech\AvroSerializer\Objects\RecordSerializer;
 use FlixTech\SchemaRegistryApi\Registry\BlockingRegistry;
