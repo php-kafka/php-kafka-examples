@@ -2,8 +2,8 @@
 
 require_once('../vendor/autoload.php');
 
-use Jobcloud\Kafka\Producer\KafkaProducerBuilder;
-use Jobcloud\Kafka\Message\KafkaProducerMessage;
+use PhpKafka\Producer\KafkaProducerBuilder;
+use PhpKafka\Message\KafkaProducerMessage;
 use Ramsey\Uuid\Uuid;
 
 // Get producer Builder instance

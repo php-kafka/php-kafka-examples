@@ -7,11 +7,18 @@ Connect to the php container:
 docker-compose exec php bash
 ```
 
-## Producer
+## Simple producer
 Will per default produce 10 messages:
 ```bash
 cd pure-php
 php producer.php
+```
+
+## Transactional producer
+Will per default produce 10 messages:
+```bash
+cd pure-php
+php producer_transactional.php
 ```
 
 ## Consumer
@@ -19,4 +26,11 @@ Will consume all messages available:
 ```bash
 cd pure-php
 php consumer.php
+```
+
+## Query metadata
+Will query metadata for all available topics, etc.:
+```bash
+cd pure-php
+php metadata.php
 ```

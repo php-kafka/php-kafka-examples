@@ -8,11 +8,11 @@ use FlixTech\SchemaRegistryApi\Registry\Cache\AvroObjectCacheAdapter;
 use FlixTech\SchemaRegistryApi\Registry\CachedRegistry;
 use FlixTech\SchemaRegistryApi\Registry\PromisingRegistry;
 use GuzzleHttp\Client;
-use Jobcloud\Kafka\Message\Encoder\AvroEncoder;
-use Jobcloud\Kafka\Message\KafkaAvroSchema;
-use Jobcloud\Kafka\Message\Registry\AvroSchemaRegistry;
-use Jobcloud\Kafka\Producer\KafkaProducerBuilder;
-use Jobcloud\Kafka\Message\KafkaProducerMessage;
+use PhpKafka\Message\Encoder\AvroEncoder;
+use PhpKafka\Message\KafkaAvroSchema;
+use PhpKafka\Message\Registry\AvroSchemaRegistry;
+use PhpKafka\Producer\KafkaProducerBuilder;
+use PhpKafka\Message\KafkaProducerMessage;
 use Ramsey\Uuid\Uuid;
 
 // Instantiate cached schema registry (vendor: flix)

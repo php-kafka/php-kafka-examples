@@ -1,0 +1,32 @@
+version: '3.7'
+services:
+  php:
+    build:
+      context: ../php
+      dockerfile: Dockerfile.alpine
+      args:
+        PHP_IMAGE_TAG: 8.0-cli-alpine3.13
+        LIBRDKAFKA_VERSION: v1.6.1
+        PHP_EXTENSION: arnaud-lb/php-rdkafka
+        PHP_EXTENSION_VERSION: 5.0.0
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./:/app
+  redpanda:
+    entrypoint:
+      - /usr/bin/rpk
+      - redpanda
+      - start
+      - --smp
+      - '1'
+      - --reserve-memory
+      - 0M
+      - --overprovisioned
+      - --node-id
+      - '0'
+      - --check=false
+    image: vectorized/redpanda:v21.4.7
+    ports:
+      - 9092:9092
+      - 29092:29092

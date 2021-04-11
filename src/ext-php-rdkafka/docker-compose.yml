@@ -2,25 +2,26 @@ version: '3.7'
 services:
   php:
     build:
-      context: ./docker/php
-      dockerfile: Dockerfile.debug
+      context: ../../docker/php
+      dockerfile: Dockerfile.alpine
       args:
-        PHP_VERSION: 7.4.14
-        LIBRDKAFKA_VERSION: v1.5.3
-        PHP_RDKAFKA_VERSION: 5.x
+        PHP_IMAGE_TAG: 8.0-cli-alpine3.13
+        LIBRDKAFKA_VERSION: v1.6.1
+        PHP_EXTENSION: arnaud-lb/php-rdkafka
+        PHP_EXTENSION_VERSION: 5.0.0
     tty: true
     working_dir: /app
     volumes:
       - ./:/app
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.5.0
+    image: confluentinc/cp-zookeeper:6.1.1
     environment:
       ZOOKEEPER_CLIENT_PORT: 2182
       ZOOKEEPER_TICK_TIME: 2000
 
   kafka:
-    image: confluentinc/cp-kafka:5.5.0
+    image: confluentinc/cp-kafka:6.1.1
     depends_on:
       - zookeeper
     ports:
@@ -36,7 +37,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
 
   kafka-schema-registry:
-    image: confluentinc/cp-schema-registry:5.5.0
+    image: confluentinc/cp-schema-registry:6.1.1
     depends_on:
       - zookeeper
       - kafka

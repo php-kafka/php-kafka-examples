@@ -1,6 +1,7 @@
-/vendor/
+**/vendor/
 /.idea
 /keys
-composer.lock
+**/composer.lock
+**/*.iml
 src/jc
 docker-compose.jc.yml

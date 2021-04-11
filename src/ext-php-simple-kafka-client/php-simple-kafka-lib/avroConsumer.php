@@ -1,6 +1,6 @@
 <?php
 
-require_once('../../../vendor/autoload.php');
+require_once('../vendor/autoload.php');
 
 use FlixTech\AvroSerializer\Objects\RecordSerializer;
 use FlixTech\SchemaRegistryApi\Exception\SchemaNotFoundException;
@@ -9,13 +9,13 @@ use FlixTech\SchemaRegistryApi\Registry\Cache\AvroObjectCacheAdapter;
 use FlixTech\SchemaRegistryApi\Registry\CachedRegistry;
 use FlixTech\SchemaRegistryApi\Registry\PromisingRegistry;
 use GuzzleHttp\Client;
-use Jobcloud\Kafka\Consumer\KafkaConsumerBuilder;
-use Jobcloud\Kafka\Exception\KafkaConsumerConsumeException;
-use Jobcloud\Kafka\Exception\KafkaConsumerEndOfPartitionException;
-use Jobcloud\Kafka\Exception\KafkaConsumerTimeoutException;
-use Jobcloud\Kafka\Message\Decoder\AvroDecoder;
-use Jobcloud\Kafka\Message\KafkaAvroSchema;
-use Jobcloud\Kafka\Message\Registry\AvroSchemaRegistry;
+use PhpKafka\Message\Decoder\AvroDecoder;
+use PhpKafka\Message\Registry\AvroSchemaRegistry;
+use PhpKafka\Message\KafkaAvroSchema;
+use PhpKafka\Consumer\KafkaConsumerBuilder;
+use PhpKafka\Exception\KafkaConsumerTimeoutException;
+use PhpKafka\Exception\KafkaConsumerEndOfPartitionException;
+use PhpKafka\Exception\KafkaConsumerConsumeException;
 
 // Instantiate cached schema registry (vendor: flix)
 $registry = new CachedRegistry(
