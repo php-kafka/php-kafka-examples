@@ -1,7 +1,7 @@
 # Register test schema
 Run the following to register the test schema:
 ```bash
-cd src/ext-php-rdkafka/php-kafka-lib
+cd php-kafka-lib
 ./console kafka-schema-registry:register:changed avroSchema
 ```
 
@@ -10,7 +10,7 @@ cd src/ext-php-rdkafka/php-kafka-lib
 Be sure to do this first: [Start containers](./../README.md)
 Connect to the php container:
 ```bash
-docker-compose php exec -it bash
+docker-compose exec php bash
 ```
 
 ## Avro producer
