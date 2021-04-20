@@ -26,7 +26,7 @@ services:
       - --node-id
       - '0'
       - --check=false
-    image: vectorized/redpanda:v21.4.7
+    image: vectorized/redpanda:v21.4.12
     ports:
       - 9092:9092
       - 29092:29092
