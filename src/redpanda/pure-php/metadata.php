@@ -9,7 +9,7 @@ $conf = new Configuration();
 // will be visible in broker logs
 $conf->set('client.id', 'pure-php-producer');
 // set broker
-$conf->set('metadata.broker.list', 'kafka:9096');
+$conf->set('metadata.broker.list', 'redpanda:9097');
 // set compression (supported are: none,gzip,lz4,snappy,zstd)
 
 // SASL Authentication

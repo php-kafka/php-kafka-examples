@@ -21,7 +21,7 @@ $producer = $builder->withAdditionalConfig(
         // 'debug' => 'all'
     ]
 )
-    ->withAdditionalBroker('kafka:9096')
+    ->withAdditionalBroker('redpanda:9097')
     ->build();
 
 for ($i = 0; $i < 10; ++$i) {

@@ -5,6 +5,8 @@ use SimpleKafkaClient\Message;
 use SimpleKafkaClient\Producer;
 use SimpleKafkaClient\KafkaErrorException;
 
+echo 'Transaction support not yet working, see: https://github.com/vectorizedio/redpanda/issues/445' . PHP_EOL;die;
+
 error_reporting(E_ALL);
 
 // -------- Intro --------
@@ -41,7 +43,7 @@ $conf = new Configuration();
 // will be visible in broker logs
 $conf->set('client.id', 'pure-php-producer');
 // set broker
-$conf->set('metadata.broker.list', 'kafka:9096');
+$conf->set('metadata.broker.list', 'redpanda:9097');
 // set compression (supported are: none,gzip,lz4,snappy,zstd)
 $conf->set('compression.codec', 'snappy');
 // set timeout, producer will retry for 5s

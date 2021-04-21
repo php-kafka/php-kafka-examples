@@ -7,8 +7,8 @@ services:
       args:
         PHP_IMAGE_TAG: 8.0-cli-alpine3.13
         LIBRDKAFKA_VERSION: v1.6.1
-        PHP_EXTENSION: arnaud-lb/php-rdkafka
-        PHP_EXTENSION_VERSION: 5.0.0
+        PHP_EXTENSION: php-kafka/php-simple-kafka-client
+        PHP_EXTENSION_VERSION: v0.1.1
     tty: true
     working_dir: /app
     volumes:

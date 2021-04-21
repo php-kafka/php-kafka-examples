@@ -69,7 +69,7 @@ $producer = $builder->withAdditionalConfig(
         // 'debug' => 'all'
     ]
 )
-    ->withAdditionalBroker('kafka:9096')
+    ->withAdditionalBroker('redpanda:9097')
     ->withEncoder($encoder)
     ->build();
 

@@ -36,7 +36,7 @@ $consumer = $builder->withAdditionalConfig(
         // 'debug' => 'all'
     ]
 )
-    ->withAdditionalBroker('kafka:9096')
+    ->withAdditionalBroker('redpanda:9097')
     ->withConsumerGroup('php-kafka-lib-high-level-consumer')
     ->withSubscription('php-kafka-lib-test-topic')
     ->build();
