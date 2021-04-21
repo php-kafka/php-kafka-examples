@@ -1,0 +1,7 @@
+{
+  "require": {
+    "ext-json": "*",
+    "php-kafka/php-simple-kafka-lib": "dev-main",
+    "ramsey/uuid": "^4.0"
+  }
+}

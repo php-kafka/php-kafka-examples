@@ -10,6 +10,9 @@ Checkout these folders to see how to run the examples:
 - [php-rdkafka](src/ext-php-rdkafka)
 - [php-simple-kafka-client](src/ext-php-simple-kafka-client)
 
+## Examples with other compatible systems
+- [redpanda](src/redpanda) Redpanda is a Kafka API compatible streaming platform
+
 ## Customize to fit your setup
 If you wan't to test / debug something that is closer to your setup,  
 you can modify the following arguments in `docker-compose.yml`:
