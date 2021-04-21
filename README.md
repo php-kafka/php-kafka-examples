@@ -11,7 +11,7 @@ Checkout these folders to see how to run the examples:
 - [php-simple-kafka-client](src/ext-php-simple-kafka-client)
 
 ## Examples with other compatible systems
-- [redpanda](src/redpanda) Redpanda is a Kafka API compatible streaming platform
+- [Redpanda](src/redpanda) is a Kafka API compatible streaming platform
 
 ## Customize to fit your setup
 If you wan't to test / debug something that is closer to your setup,  
