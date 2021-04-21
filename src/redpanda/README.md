@@ -1,6 +1,7 @@
 # Redpanda playground
 [Redpanda](https://vectorized.io/redpanda) support all parts of the Kafka API except for the transactions API.  
-You can find the issue in their public github [here](https://github.com/vectorizedio/redpanda/issues/445).  
+You can find the issue in their public github [here](https://github.com/vectorizedio/redpanda/issues/445).
+Also it seems there is currently no setup to support a schema registry.  
 This means the currently included transaction examples will not work atm.  
 
 ## Running examples
