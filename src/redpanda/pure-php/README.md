@@ -14,7 +14,7 @@ cd pure-php
 php producer.php
 ```
 
-## Transactional producer
+## Transactional producer (currently unsupported by Redpanda)
 Will per default produce 10 messages:
 ```bash
 cd pure-php
