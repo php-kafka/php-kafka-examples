@@ -14,7 +14,7 @@ $producer = $builder->withAdditionalConfig(
         // will be visible in broker logs
         'client.id' => 'php-kafka-lib-producer',
         // set compression (supported are: none,gzip,lz4,snappy,zstd)
-        'compression.codec' => 'snappy',
+        'compression.codec' => 'zstd',
 
         // Add additional output if you need to debug a problem
         // 'log_level' => (string) LOG_DEBUG,
