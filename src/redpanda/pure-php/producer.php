@@ -12,7 +12,7 @@ $conf->set('client.id', 'pure-php-producer');
 // set broker
 $conf->set('metadata.broker.list', 'redpanda:9097');
 // set compression (supported are: none,gzip,lz4,snappy,zstd)
-$conf->set('compression.codec', 'zstd');
+$conf->set('compression.codec', 'snappy');
 // set timeout, producer will retry for 5s
 $conf->set('message.timeout.ms', '5000');
 //If you need to produce exactly once and want to keep the original produce order, uncomment the line below
