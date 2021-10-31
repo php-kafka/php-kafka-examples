@@ -5,10 +5,10 @@ services:
       context: ../../docker/php
       dockerfile: Dockerfile.alpine
       args:
-        PHP_IMAGE_TAG: 8.0-cli-alpine3.13
-        LIBRDKAFKA_VERSION: v1.6.1
+        PHP_IMAGE_TAG: 8.0-cli-alpine3.14
+        LIBRDKAFKA_VERSION: v1.8.2
         PHP_EXTENSION: php-kafka/php-simple-kafka-client
-        PHP_EXTENSION_VERSION: v0.1.1
+        PHP_EXTENSION_VERSION: v0.1.4
     tty: true
     working_dir: /app
     volumes:
