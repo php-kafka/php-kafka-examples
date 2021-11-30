@@ -5,10 +5,10 @@ services:
       context: ../../docker/php
       dockerfile: Dockerfile.alpine
       args:
-        PHP_IMAGE_TAG: 8.0-cli-alpine3.13
-        LIBRDKAFKA_VERSION: v1.6.1
+        PHP_IMAGE_TAG: 8.1-cli-alpine3.15
+        LIBRDKAFKA_VERSION: v1.8.2
         PHP_EXTENSION: php-kafka/php-simple-kafka-client
-        PHP_EXTENSION_VERSION: v0.1.1
+        PHP_EXTENSION_VERSION: v0.1.4
     tty: true
     working_dir: /app
     volumes:
@@ -30,7 +30,7 @@ services:
       - --advertise-kafka-addr
       - PLAINTEXT://redpanda:29097,OUTSIDE://redpanda:9097
       - --check=false
-    image: vectorized/redpanda:v21.4.12
+    image: vectorized/redpanda:v21.10.2
     ports:
       - 9097:9097
       - 29097:29097
