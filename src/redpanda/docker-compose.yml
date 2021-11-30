@@ -33,4 +33,5 @@ services:
     image: vectorized/redpanda:v21.10.2
     ports:
       - 9097:9097
+      - 8081:8081
       - 29097:29097
