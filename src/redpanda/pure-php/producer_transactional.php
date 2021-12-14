@@ -5,8 +5,6 @@ use SimpleKafkaClient\Message;
 use SimpleKafkaClient\Producer;
 use SimpleKafkaClient\KafkaErrorException;
 
-echo 'Transaction example is currently work in progress, see https://github.com/php-kafka/php-kafka-examples/issues/10' . PHP_EOL;die;
-
 error_reporting(E_ALL);
 
 // -------- Intro --------
