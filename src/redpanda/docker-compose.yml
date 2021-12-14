@@ -25,6 +25,10 @@ services:
       - --overprovisioned
       - --node-id
       - '0'
+      - --set
+      - redpanda.enable_idempotence=true
+      - --set
+      - redpanda.enable_transactions=true
       - --kafka-addr
       - PLAINTEXT://0.0.0.0:29097,OUTSIDE://0.0.0.0:9097
       - --advertise-kafka-addr
