@@ -14,27 +14,18 @@ services:
     volumes:
       - ./:/app
   redpanda:
-    entrypoint:
-      - /usr/bin/rpk
-      - redpanda
-      - start
-      - --smp
-      - '1'
-      - --reserve-memory
-      - 0M
-      - --overprovisioned
-      - --node-id
-      - '0'
-      - --set
-      - redpanda.enable_idempotence=true
-      - --set
-      - redpanda.enable_transactions=true
-      - --kafka-addr
-      - PLAINTEXT://0.0.0.0:29097,OUTSIDE://0.0.0.0:9097
-      - --advertise-kafka-addr
-      - PLAINTEXT://redpanda:29097,OUTSIDE://redpanda:9097
-      - --check=false
-    image: vectorized/redpanda:v21.10.2
+    image: vectorized/redpanda:v21.11.2
+    command:
+      - "redpanda start"
+      - "--smp 1"
+      - "--reserve-memory 0M"
+      - "--overprovisioned"
+      - "--node-id 0"
+      - "--set redpanda.enable_idempotence=true"
+      - "--set redpanda.enable_transactions=true"
+      - "--kafka-addr PLAINTEXT://0.0.0.0:29097,OUTSIDE://0.0.0.0:9097"
+      - "--advertise-kafka-addr PLAINTEXT://redpanda:29097,OUTSIDE://redpanda:9097"
+      - "--check=false"
     ports:
       - 9097:9097
       - 8081:8081
